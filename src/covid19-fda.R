@@ -1,7 +1,8 @@
 library(tidyverse)
 library(fda) # functional data analysis
 
-# https://data.humdata.org/dataset/5dff64bc-a671-48da-aa87-2ca40d7abf02 (Source of Data)
+# https://data.humdata.org/dataset/5dff64bc-a671-48da-aa87-2ca40d7abf02 (Source of Case Data)
+# https://ourworldindata.org/grapher/projected-population-by-country (Source of Population Data)
 
 ### GET DATA ### [CHANGE AS NEEDED]
 confirmed_cases <- read_csv('/home/mrlj/Desktop/Github/covid-19/fda-covid19/data/time_series_2019-ncov-Confirmed.csv')
