@@ -38,6 +38,41 @@ for(country in countries){
 }
 
 ### PLOTS ###
+# CONFIRMED
+plot.fd(confirmed_functions_fd$`United Kingdom`, col = 'black', xlab = "Days from January 22th", ylab = "Confirmed cases",
+        ylim = c(0, 5000), main = "Confirmed cases of Covid-19")
+lines(confirmed_functions_fd$`Korea, South`, col = 'blue')
+lines(confirmed_functions_fd$China, col = 'green')
+lines(confirmed_functions_fd$US, col = 'orange')
+lines(confirmed_functions_fd$Italy, col = 'purple')
+lines(confirmed_functions_fd$Germany, col = 'red')
+lines(confirmed_functions_fd$France, col = 'violet')
+legend(1, 5000, legend=c("UK", "South Korea", "China", "US", "Italy", "Germany", "France"),
+       col=c("black", "blue", "green", "orange", "purple", "red", "violet"), lty=1, cex=0.8)
+
+plot.fd(confirmed_functions_fd$`United Kingdom`, col = 'black', Lfdobj = 1, xlab = "Days from January 22th",
+        ylab = "Value of derivative", ylim = c(0, 150), main = "Derivative of confirmed cases curve")
+lines(deriv.fd(confirmed_functions_fd$`Korea, South`), col = 'blue')
+lines(deriv.fd(confirmed_functions_fd$China), col = 'green')
+lines(deriv.fd(confirmed_functions_fd$US), col = 'orange')
+lines(deriv.fd(confirmed_functions_fd$Italy), col = 'purple')
+lines(deriv.fd(confirmed_functions_fd$Germany), col = 'red')
+lines(deriv.fd(confirmed_functions_fd$France), col = 'violet')
+legend(1, 150, legend=c("UK", "South Korea", "China", "US", "Italy", "Germany", "France"),
+       col=c("black", "blue", "green", "orange", "purple", "red", "violet"), lty=1, cex=0.8)
+
+plot.fd(confirmed_functions_fd$`United Kingdom`, col = 'black', Lfdobj = 2, xlab = "Days from January 22th",
+        ylab = "Value of second derivative", ylim = c(-20, 70), main = "Second derivative of confirmed cases curve")
+lines(deriv.fd(confirmed_functions_fd$`Korea, South`, Lfdobj = 2), col = 'blue')
+lines(deriv.fd(confirmed_functions_fd$China, Lfdobj = 2), col = 'green')
+lines(deriv.fd(confirmed_functions_fd$US, Lfdobj = 2), col = 'orange')
+lines(deriv.fd(confirmed_functions_fd$Italy, Lfdobj = 2), col = 'purple')
+lines(deriv.fd(confirmed_functions_fd$Germany, Lfdobj = 2), col = 'red')
+lines(deriv.fd(confirmed_functions_fd$France, Lfdobj = 2), col = 'violet')
+legend(1, 50, legend=c("UK", "South Korea", "China", "US", "Italy", "Germany", "France"),
+       col=c("black", "blue", "green", "orange", "purple", "red", "violet"), lty=1, cex=0.8)
+
+# DEATHS
 plot.fd(death_functions_fd$`United Kingdom`, col = 'black', xlab = "Days from January 22th", ylab = "Deaths", ylim = c(0, 5000),
         main = "Deaths from Covid-19")
 lines(death_functions_fd$`Korea, South`, col = 'blue')
