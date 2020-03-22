@@ -20,7 +20,6 @@ spline_basis <- create.bspline.basis(rangeval = range(days), nbasis = 10) ### B-
 confirmed_functions <- list()
 death_functions <- list()
 recovered_functions <- list()
-cd_ratio_functions <- list()
 
 for(country in countries){
   confirmed_functions[[country]] <- smooth.basis(argvals = days, y = confirmed_cases[[country]], spline_basis)
