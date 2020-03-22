@@ -1,6 +1,6 @@
 # Covid19-fda
 This repository contains the data files and source code for the functional data 
-analysis of covid-19 data presented on my blog.
+analysis of covid-19 data presented on my [blog](https://thethoughtjumble.home.blog/2020/03/22/covid-19-a-functional-data-analysis/).
 
 # Self-Promotion
 You can support Ben's work by:
