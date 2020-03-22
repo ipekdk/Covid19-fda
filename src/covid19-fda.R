@@ -4,9 +4,9 @@ library(fda) # functional data analysis
 # https://data.humdata.org/dataset/5dff64bc-a671-48da-aa87-2ca40d7abf02 (Source of Data)
 
 ### GET DATA ### [CHANGE AS NEEDED]
-confirmed_cases <- read_csv('/home/mrlj/Desktop/covid-19/fda-covid19/data/time_series_2019-ncov-Confirmed.csv')
-death_cases <- read_csv('/home/mrlj/Desktop/covid-19/fda-covid19/data/time_series_2019-ncov-Deaths.csv')
-recovered_cases <- read_csv('/home/mrlj/Desktop/covid-19/fda-covid19/data/time_series_2019-ncov-Recovered.csv')
+confirmed_cases <- read_csv('/home/mrlj/Desktop/Github/covid-19/fda-covid19/data/time_series_2019-ncov-Confirmed.csv')
+death_cases <- read_csv('/home/mrlj/Desktop/Github/covid-19/fda-covid19/data/time_series_2019-ncov-Deaths.csv')
+recovered_cases <- read_csv('/home/mrlj/Desktop/Github/covid-19/fda-covid19/data/time_series_2019-ncov-Recovered.csv')
 
 ### COUNTRIES TO BE COMPARED ###
 
