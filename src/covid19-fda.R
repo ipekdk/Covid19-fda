@@ -12,7 +12,7 @@ recovered_cases <- read_csv('/home/mrlj/Desktop/covid-19/fda-covid19/data/time_s
 countries <- c("US", "United Kingdom", "Italy", "Germany", "China", "Korea, South", "France")
 
 ### CREATE SPLINE BASIS ###
-days <- seq(1, nrow(confirmed_cases), 1) # days from January 20th
+days <- seq(1, nrow(confirmed_cases), 1) # days from January 22nd
 spline_basis <- create.bspline.basis(rangeval = range(days), nbasis = 10) ### B-spline basis with 10 basis functions
 
 ### SMOOTH DATA INTO THE BASIS ###
@@ -38,7 +38,7 @@ for(country in countries){
 }
 
 ### PLOTS ###
-plot.fd(death_functions_fd$`United Kingdom`, col = 'black', xlab = "Days from January 20th", ylab = "Deaths", ylim = c(0, 5000),
+plot.fd(death_functions_fd$`United Kingdom`, col = 'black', xlab = "Days from January 22th", ylab = "Deaths", ylim = c(0, 5000),
         main = "Deaths from Covid-19")
 lines(death_functions_fd$`Korea, South`, col = 'blue')
 lines(death_functions_fd$China, col = 'green')
@@ -49,7 +49,7 @@ lines(death_functions_fd$France, col = 'violet')
 legend(1, 5000, legend=c("UK", "South Korea", "China", "US", "Italy", "Germany", "France"),
        col=c("black", "blue", "green", "orange", "purple", "red", "violet"), lty=1, cex=0.8)
 
-plot.fd(death_functions_fd$`United Kingdom`, col = 'black', Lfdobj = 1, xlab = "Days from January 20th",
+plot.fd(death_functions_fd$`United Kingdom`, col = 'black', Lfdobj = 1, xlab = "Days from January 22th",
         ylab = "Value of derivative", ylim = c(0, 150), main = "Derivative of death curve")
 lines(deriv.fd(death_functions_fd$`Korea, South`), col = 'blue')
 lines(deriv.fd(death_functions_fd$China), col = 'green')
@@ -60,7 +60,7 @@ lines(deriv.fd(death_functions_fd$France), col = 'violet')
 legend(1, 150, legend=c("UK", "South Korea", "China", "US", "Italy", "Germany", "France"),
        col=c("black", "blue", "green", "orange", "purple", "red", "violet"), lty=1, cex=0.8)
 
-plot.fd(death_functions_fd$`United Kingdom`, col = 'black', Lfdobj = 2, xlab = "Days from January 20th",
+plot.fd(death_functions_fd$`United Kingdom`, col = 'black', Lfdobj = 2, xlab = "Days from January 22th",
         ylab = "Value of second derivative", ylim = c(-20, 70), main = "Second derivative of death curve")
 lines(deriv.fd(death_functions_fd$`Korea, South`, Lfdobj = 2), col = 'blue')
 lines(deriv.fd(death_functions_fd$China, Lfdobj = 2), col = 'green')
