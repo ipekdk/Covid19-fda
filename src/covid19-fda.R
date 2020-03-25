@@ -1,7 +1,6 @@
 library(tidyverse)
 library(fda) # functional data analysis
 library(curl) # for downloading data
-library(ggplot2) # for graphics
 
 # https://data.humdata.org/dataset/5dff64bc-a671-48da-aa87-2ca40d7abf02 (Source of Case Data)
 
