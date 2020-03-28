@@ -22,8 +22,7 @@ names(deaths) <- c("province", "country", days)
 
 ### COUNTRIES TO BE COMPARED ###
 
-
-countries <- sort(c("US", "United Kingdom", "Italy", "Germany", "China", "Korea, South", "France"))
+countries <- sort(c("US", "United Kingdom", "Italy", "Germany", "China", "Korea, South", "France", "Spain"))
 
 confirmed <- subset(confirmed, confirmed$country %in% countries)
 deaths <- subset(deaths, deaths$country %in% countries)
@@ -55,6 +54,12 @@ for(place in countries){
     }
 }
 
+### Calculate Ratios
+ratios <- list()
+for(place in countries){
+  ratios[[place]] <- 100 * (deaths_processed[[place]]/max(confirmed_processed[[place]], 1))
+}
+
 ### CREATE SPLINE BASIS ###
 spline_basis <- create.bspline.basis(rangeval = range(days), nbasis = 10) ### B-spline basis with 10 basis functions
 
@@ -69,6 +74,8 @@ smoother <- function(x){smooth.basis(argvals = days, y = x, spline_basis)}
 
 confirmed_functions <- lapply(confirmed_processed, smoother)
 death_functions <- lapply(deaths_processed, smoother)
+ratio_functions <- lapply(ratios, smoother)
+
 log_confirmed_functions <- lapply(log_confirmed, smoother)
 log_death_functions <- lapply(log_deaths, smoother)
 
@@ -77,43 +84,44 @@ extracter <- function(x){x$fd}
 
 confirmed_functions_fd <- lapply(confirmed_functions, extracter)
 death_functions_fd <- lapply(death_functions, extracter)
+ratios_fd <- lapply(ratio_functions, extracter)
 log_confirmed_functions_fd <- lapply(log_confirmed_functions, extracter)
 log_death_functions_fd <- lapply(log_death_functions, extracter)
 
 ### PLOTS ###
-colours <- c('black', 'blue', 'green', 'orange', 'purple', 'red', 'violet')
+colours <- c('black', 'blue', 'green', 'orange', 'purple', 'red', 'violet', 'yellow')
 
 # CONFIRMED
 
 plot.fd(confirmed_functions_fd[[1]], col = colours[1], xlab = "Days from January 22nd (Inclusive)",
-        ylab = "Confirmed cases", main = "Confirmed cases of Covid-19")
+        ylab = "Confirmed cases", main = "Confirmed cases of Covid-19", ylim = c(0, 100000))
 for(i in 2:length(countries)){lines(confirmed_functions_fd[[i]], col = colours[i])}
 legend("topleft", legend = countries, col = colours, lty = 1, cex = 0.7)
 
 plot.fd(deriv.fd(confirmed_functions_fd[[1]]), col = colours[1], xlab = "Days from January 22nd (Inclusive)",
-        ylab = "Value of derivative", main = "Derivative of confirmed cases curve", ylim = c(-100, 15000))
+        ylab = "Value of derivative", main = "Derivative of confirmed cases curve", ylim = c(-100, 20000))
 for(i in 2:length(countries)){lines(deriv.fd(confirmed_functions_fd[[i]]), col = colours[i])}
 legend("topleft", legend = countries, col = colours, lty = 1, cex = 0.7)
 
 plot.fd(deriv.fd(confirmed_functions_fd[[1]], Lfdobj = 2), col = colours[1], xlab = "Days from January 22nd (Inclusive)",
-        ylab = "Value of second derivative", main = "Second derivative of confirmed cases curve", ylim = c(-600, 2500))
+        ylab = "Value of second derivative", main = "Second derivative of confirmed cases curve", ylim = c(-600, 3000))
 for(i in 2:length(countries)){lines(deriv.fd(confirmed_functions_fd[[i]], Lfdobj = 2), col = colours[i])}
 legend("topleft", legend = countries, col = colours, lty = 1, cex = 0.7)
 
 # DEATHS
 
 plot.fd(death_functions_fd[[1]], col = colours[1], xlab = "Days from January 22nd (Inclusive)",
-        ylab = "Deaths", main = "Deaths from Covid-19", ylim = c(0, 7000))
+        ylab = "Deaths", main = "Deaths from Covid-19", ylim = c(0, 9000))
 for(i in 2:length(countries)){lines(death_functions_fd[[i]], col = colours[i])}
 legend("topleft", legend = countries, col = colours, lty = 1, cex = 0.7)
 
 plot.fd(deriv.fd(death_functions_fd[[1]]), col = colours[1], xlab = "Days from January 22nd (Inclusive)",
-        ylab = "Value of derivative", main = "Derivative of death curve", ylim = c(0, 800))
+        ylab = "Value of derivative", main = "Derivative of death curve", ylim = c(0, 1000))
 for(i in 2:length(countries)){lines(deriv.fd(death_functions_fd[[i]]), col = colours[i])}
 legend("topleft", legend = countries, col = colours, lty = 1, cex = 0.7)
 
 plot.fd(deriv.fd(death_functions_fd[[1]], Lfdobj = 2), col = colours[1], xlab = "Days from January 22nd (Inclusive)",
-        ylab = "Value of second derivative", main = "Second derivative of death curve", ylim = c(-10, 60))
+        ylab = "Value of second derivative", main = "Second derivative of death curve", ylim = c(-10, 150))
 for(i in 2:length(countries)){lines(deriv.fd(death_functions_fd[[i]], Lfdobj = 2), col = colours[i])}
 legend("topleft", legend = countries, col = colours, lty = 1, cex = 0.7)
 
@@ -150,4 +158,10 @@ legend("topleft", legend = countries, col = colours, lty = 1, cex = 0.7)
 plot.fd(deriv.fd(log_death_functions_fd[[1]], Lfdobj = 2), col = colours[1], xlab = "Days from January 22nd (Inclusive)",
         ylab = "Value of second derivative", main = "Second derivative of log deaths curve", ylim = c(-0.1, 0.1))
 for(i in 2:length(countries)){lines(deriv.fd(log_death_functions_fd[[i]], Lfdobj = 2), col = colours[i])}
+legend("topleft", legend = countries, col = colours, lty = 1, cex = 0.7)
+
+### RATIOS
+plot.fd(ratios_fd[[1]], col = colours[1], xlab = "Days from January 22nd (Inclusive)",
+        ylab = "Deaths/Confirmed Cases in %", main = "Case fatality ratio", ylim = c(0, 11))
+for(i in 2:length(countries)){lines(ratios_fd[[i]], col = colours[i])}
 legend("topleft", legend = countries, col = colours, lty = 1, cex = 0.7)
